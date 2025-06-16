@@ -13,8 +13,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {JobCard} from '../../components/ui/JobCard';
 import {colors} from '../../styles/theme';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../../App';
+
 import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../../types/types';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'JobDetail'>;
 
@@ -32,6 +33,8 @@ export default function JobsList() {
       salary: '$160,000/year',
       location: 'California, USA',
       logo: 'https://logo.clearbit.com/google.com',
+      description: ` We're looking for a Product Manager who can drive the strategy, planning, and execution of our product development lifecycle. You’ll work closely with cross-functional teams including engineering, design, marketing, and sales to deliver cutting-edge features and enhancements that delight users.
+`,
     },
     {
       id: '2',
@@ -41,6 +44,7 @@ export default function JobsList() {
       salary: '$130,000/year',
       location: 'USA',
       logo: 'https://logo.clearbit.com/netflix.com',
+      description: `We’re seeking a skilled Frontend Developer proficient in React.js to build engaging and scalable web applications. You will collaborate closely with designers and backend engineers to create seamless user experiences.`,
     },
   ];
 
@@ -54,30 +58,40 @@ export default function JobsList() {
       location: 'USA',
       color: '#fdecef',
       logo: 'https://logo.clearbit.com/dribbble.com',
+      description: `We’re seeking a skilled Frontend Developer proficient in React.js to build engaging and scalable web applications. You will collaborate closely with designers and backend engineers to create seamless user experiences.`,
     },
     {
       id: '4',
       title: 'Sr Engineer',
       company: 'Facebook',
+      location: 'UAE',
       salary: '$96,000/y',
       color: '#e9f1ff',
       logo: 'https://logo.clearbit.com/facebook.com',
+      tags: ['Frontend', 'Remote', 'Mid-Level'],
+      description: `We’re seeking a skilled Frontend Developer proficient in React.js to build engaging and scalable web applications. You will collaborate closely with designers and backend engineers to create seamless user experiences.`,
     },
     {
       id: '5',
       title: 'Sr Engineer',
       company: 'Facebook',
+      location: 'India',
       salary: '$96,000/y',
       color: '#e9f1ff',
       logo: 'https://logo.clearbit.com/facebook.com',
+      tags: ['Frontend', 'Remote', 'Mid-Level'],
+      description: `We’re seeking a skilled Frontend Developer proficient in React.js to build engaging and scalable web applications. You will collaborate closely with designers and backend engineers to create seamless user experiences.`,
     },
     {
       id: '6',
       title: 'Sr Engineer',
       company: 'Facebook',
+      location: 'Armenia',
       salary: '$96,000/y',
       color: '#e9f1ff',
       logo: 'https://logo.clearbit.com/facebook.com',
+      tags: ['Frontend', 'Remote', 'Mid-Level'],
+      description: `We’re seeking a skilled Frontend Developer proficient in React.js to build engaging and scalable web applications. You will collaborate closely with designers and backend engineers to create seamless user experiences.`,
     },
   ];
 
@@ -100,7 +114,7 @@ export default function JobsList() {
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Featured Jobs</Text>
           <TouchableOpacity>
-            <Text style={styles.link}>See all</Text>
+            {/* <Text style={styles.link}>See all</Text> */}
           </TouchableOpacity>
         </View>
         <FlatList
@@ -129,13 +143,17 @@ export default function JobsList() {
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Recommended Jobs</Text>
           <TouchableOpacity>
-            <Text style={styles.link}>See all</Text>
+            {/* <Text style={styles.link}>See all</Text> */}
           </TouchableOpacity>
         </View>
         <View style={styles.recommendedContainer}>
           {recommendedJobs.map(item => (
-            <View key={item.id} style={{width: '48%', marginBottom: 12}}>
-              <JobCard job={item} variant="recommend" />
+            <View key={item.id} style={{width: '100%'}}>
+              <JobCard
+                job={item}
+                variant="recommend"
+                onPress={() => navigation.navigate('JobDetail', {job: item})}
+              />
             </View>
           ))}
         </View>

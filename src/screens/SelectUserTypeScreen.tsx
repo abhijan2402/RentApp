@@ -2,14 +2,15 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../App';
+
 import {useAuthStore} from '../store/useAuthStore';
 import {colors} from '../styles/theme';
 import {AppPage} from '../components/layout/AppPage';
 import {AppScrollView} from '../components/layout/AppScrollView';
 import {AppRadioGroup} from '../components/ui/AppRadioGroup';
+import {RootStackParamList} from '../../types/types';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'UserType'>;
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 const options = [
   {
@@ -49,7 +50,12 @@ export default function SelectUserTypeScreen() {
     if (selected.length > 0) {
       login(selected.join(', '));
       console.log('User selected type:', selected);
-      navigation.navigate('Dashboard');
+      navigation.navigate('Main', {
+        screen: 'Menu', // Tab navigator
+        params: {
+          screen: 'Dashboard', // Actual tab screen
+        },
+      });
     }
   };
 

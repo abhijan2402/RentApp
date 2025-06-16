@@ -13,14 +13,16 @@ import {AppScrollView} from '../components/layout/AppScrollView';
 import {AppTabs} from '../components/ui/AppTabs';
 import JobsList from './jobs/JobsList';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../App';
+
 import {useNavigation} from '@react-navigation/native';
 import PropertiesScreen from './property/PropertiesScreen';
 import AddPropertyForm from './property/AddPropertyForm';
 import AddJobForm from './jobs/AddJobForm';
 import {colors} from '../styles/theme';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'Profile'>;
+import { RootStackParamList } from '../../types/types';
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 export default function DashboardScreen() {
   const userType = useAuthStore(state => state.userType);
   const navigation = useNavigation<NavigationProp>();
@@ -33,7 +35,7 @@ export default function DashboardScreen() {
   const closeModal = () => setModalVisible(false);
 
   return (
-    <AppPage title="HireHaven" showBack={false}>
+    <AppPage title="HireHaven" showBack={false} showProfileIcon={true}>
       <AppScrollView contentContainerStyle={styles.container}>
         {/* Greeting */}
         <View style={styles.header}>

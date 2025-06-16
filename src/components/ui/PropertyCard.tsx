@@ -12,27 +12,18 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../../App';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import {colors} from '../../styles/theme';
+import {Property, RootStackParamList} from '../../../types/types';
 
 const {width} = Dimensions.get('window');
 
-type Property = {
-  id: string;
-  images: string[];
-  title: string;
-  price: string;
-  location: string;
-  area: string;
-  onPress?: () => void;
-};
-
-interface Props extends Property {}
-
 type NavigationProp = StackNavigationProp<RootStackParamList, 'PropertyDetail'>;
 
-export const PropertyCard: React.FC<Props> = props => {
+export const PropertyCard: React.FC<Property> = props => {
   const navigation = useNavigation<NavigationProp>();
-  const {id, images, title, price, location, area} = props;
+  const {images, title, price, location, area} = props;
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -76,11 +67,16 @@ export const PropertyCard: React.FC<Props> = props => {
           </View>
         </View>
 
-        <View style={styles.content}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.text}>💰 {price}</Text>
-          <Text style={styles.text}>📍 {location}</Text>
-          <Text style={styles.text}>📐 {area}</Text>
+        <View style={styles.detailContainer}>
+          <View style={styles.content}>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.text}>💰 {price}</Text>
+            <Text style={styles.text}>📍 {location}</Text>
+            <Text style={styles.text}>📐 {area}</Text>
+          </View>
+          <TouchableOpacity style={styles.callBtn}>
+            <Icon name="call-outline" size={20} color="#fff" />
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>
@@ -94,7 +90,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 16,
     elevation: 3,
-    marginHorizontal: 8,
   },
   imageContainer: {
     position: 'relative',
@@ -145,5 +140,20 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     color: '#555',
+  },
+  detailContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  callBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    padding: 12,
+    borderRadius: 8,
+    justifyContent: 'center',
+    marginEnd: 8,
   },
 });

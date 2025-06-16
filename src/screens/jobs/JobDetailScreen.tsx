@@ -35,7 +35,7 @@ export default function JobDetailScreen() {
   const {job} = route.params;
 
   return (
-    <AppPage title="HireHaven" showBack={true}>
+    <AppPage title="HireHaven" showBack={true} showProfileIcon={true}>
       <AppScrollView contentContainerStyle={styles.container}>
         {/* Company Logo & Info */}
         <View style={styles.header}>

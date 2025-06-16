@@ -6,12 +6,14 @@ import {
   FlatList,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import {useAuthStore} from '../store/useAuthStore'; // Replace with actual path
 import {colors} from '../styles/theme';
 import {AppTabs} from '../components/ui/AppTabs';
 import {AppPage} from '../components/layout/AppPage';
 import {AppScrollView} from '../components/layout/AppScrollView';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const dummyProfile = {
   name: 'Daljeet Singh',
@@ -103,6 +105,13 @@ const ProfileScreen = () => {
           ListEmptyComponent={<Text style={styles.empty}>No data found.</Text>}
           scrollEnabled={false}
         />
+        <View style={styles.logoutWrapper}>
+          <TouchableOpacity
+            style={styles.logoutBtn}
+            onPress={() => useAuthStore.getState().logout()}>
+            <Icon name="power-outline" size={18} color="#fff" />
+          </TouchableOpacity>
+        </View>
       </AppScrollView>
     </AppPage>
   );
@@ -175,6 +184,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#888',
     marginTop: 20,
+  },
+  logoutWrapper: {
+    position: 'absolute',
+    top: 18,
+    right: 16,
+    zIndex: 10,
+  },
+  logoutBtn: {
+    backgroundColor: colors.primary,
+    padding: 8,
+    borderRadius: 50,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    shadowOffset: {width: 0, height: 2},
+    elevation: 4,
   },
 });
 

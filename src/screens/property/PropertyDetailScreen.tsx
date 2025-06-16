@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -12,32 +12,32 @@ import {
   NativeScrollEvent,
 } from 'react-native';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {RootStackParamList} from '../../../App';
-import {StackNavigationProp} from '@react-navigation/stack';
+
 import {AppPage} from '../../components/layout/AppPage';
 import {AppScrollView} from '../../components/layout/AppScrollView';
+import {MainStackParamList, RootStackParamList} from '../../../types/types';
 
 const {width} = Dimensions.get('window');
 
-type PropertyDetailRouteProp = RouteProp<RootStackParamList, 'PropertyDetail'>;
+type PropertyDetailRouteProp = RouteProp<MainStackParamList, 'PropertyDetail'>;
 
 const PropertyDetailScreen = () => {
   const {params} = useRoute<PropertyDetailRouteProp>();
   const {property} = params;
 
   const [activeIndex, setActiveIndex] = useState(0);
-  
-    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const index = Math.round(event.nativeEvent.contentOffset.x / (width - 32));
-      setActiveIndex(index);
-    };
+
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const index = Math.round(event.nativeEvent.contentOffset.x / (width - 32));
+    setActiveIndex(index);
+  };
 
   const handleCall = () => {
     Linking.openURL('tel:9876543210'); // Replace with dynamic number if available
   };
 
   return (
-    <AppPage title="HireHevan" showBack={true}>
+    <AppPage title="HireHevan" showBack={true} showProfileIcon={true}>
       <AppScrollView>
         <View style={styles.container}>
           <Text style={styles.title}>{property.title}</Text>

@@ -6,11 +6,12 @@ import {AppPage} from '../../components/layout/AppPage';
 import {AppScrollView} from '../../components/layout/AppScrollView';
 import {AppInput} from '../../components/ui/AppInput';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../App';
-import { useNavigation } from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'PropertyDetail'>;
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../../types/types';
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 const properties = [
   {
     id: '1',
@@ -78,8 +79,13 @@ const PropertiesScreen = () => {
             area={item.area}
             images={item.images}
             onPress={() =>
-              navigation.navigate('PropertyDetail', {property: item})
-            } 
+              navigation.navigate('Main', {
+                screen: 'PropertyDetail',
+                params: {
+                  property: item,
+                },
+              })
+            }
           />
         )}
       />

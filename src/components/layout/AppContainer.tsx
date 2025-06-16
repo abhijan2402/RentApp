@@ -1,13 +1,9 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {colors} from '../../styles/theme';
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export const AppContainer = ({children}: Props) => {
-  return <View style={styles.container}>{children}</View>;
+export const AppContainer = ({children}: {children: React.ReactNode}) => {
+  return <SafeAreaView style={styles.container}>{children}</SafeAreaView>;
 };
 
 const styles = StyleSheet.create({

@@ -1,19 +1,19 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../App';
 
 import {AppScrollView} from '../components/layout/AppScrollView';
 import {AppInput} from '../components/ui/AppInput';
 import {AppButton} from '../components/ui/AppButton';
-import {AppLink} from '../components/ui/AppLink';
 import {AppPage} from '../components/layout/AppPage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {AppSeparator} from '../components/ui/AppSeparator';
+import {colors} from '../styles/theme';
+import {RootStackParamList} from '../../types/types';
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -22,7 +22,7 @@ const schema = z.object({
 });
 
 type SignupForm = z.infer<typeof schema>;
-type NavigationProp = StackNavigationProp<RootStackParamList, 'Signup'>;
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 export default function SignupScreen() {
   const navigation = useNavigation<NavigationProp>();
@@ -37,12 +37,20 @@ export default function SignupScreen() {
 
   const onSubmit = (data: SignupForm) => {
     console.log('Signup data:', data);
-    navigation.navigate('UserType');
+    navigation.navigate('Auth', {
+      screen: 'Signup',
+    });
   };
 
   return (
     <AppPage title="HireHaven" showBack={false}>
       <AppScrollView contentContainerStyle={styles.container}>
+        <Image
+          source={{
+            uri: 'https://cdn-icons-png.flaticon.com/512/847/847969.png',
+          }}
+          style={styles.signupImage}
+        />
         <Text style={styles.title}>Create Account 🎉</Text>
         <Text style={styles.subtitle}>Sign up to get started!</Text>
 
@@ -68,7 +76,7 @@ export default function SignupScreen() {
           name="email"
           render={({field: {onChange, value}}) => (
             <AppInput
-              label="E-mail"
+              label="Email"
               placeholder="Enter your email"
               value={value}
               onChangeText={text => onChange(text.trim())}
@@ -108,16 +116,29 @@ export default function SignupScreen() {
 
         <AppSeparator />
 
-        <AppLink
-          label="Already have an account? Login"
-          onPress={() => navigation.navigate('Login')}
-        />
+        <TouchableOpacity
+          style={styles.accountlinkWrap}
+          onPress={() =>
+            navigation.navigate('Auth', {
+              screen: 'Login',
+            })
+          }>
+          <Text style={styles.accountlinkSubtitle}>Haven't and account?</Text>
+          <Text style={styles.register}>Login</Text>
+        </TouchableOpacity>
       </AppScrollView>
     </AppPage>
   );
 }
 
 const styles = StyleSheet.create({
+  signupImage: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
   container: {
     paddingVertical: 20,
   },
@@ -133,5 +154,16 @@ const styles = StyleSheet.create({
     color: '#555',
     marginBottom: 20,
     textAlign: 'center',
+  },
+  accountlinkWrap: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  accountlinkSubtitle: {
+    color: colors.text,
+  },
+  register: {
+    color: colors.secondary,
   },
 });
